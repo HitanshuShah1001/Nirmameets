@@ -16,8 +16,8 @@ const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabs = () => {
     return (
-        <Tab.Navigator initialRouteName='Home' shifting={true} keyboardHidesNavigationBar={false} sceneAnimationEnabled>
-            <Tab.Screen name="Home" component={Home} />
+        <Tab.Navigator initialRouteName='HFeedome' shifting={true} keyboardHidesNavigationBar={false} sceneAnimationEnabled>
+            <Tab.Screen name="Feed" component={Home} />
             <Tab.Screen name="User" component={User} />
             <Tab.Screen name="Settings" component={Settings} />
 

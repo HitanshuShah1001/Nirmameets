@@ -27,7 +27,7 @@ export default function Login() {
           setUser(
             res.data.Name,
             res.data.email,
-            res.data.Department,
+            res.data.Field,
             res.data.token,
             true
           )

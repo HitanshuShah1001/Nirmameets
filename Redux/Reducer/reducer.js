@@ -4,7 +4,7 @@ const initialState = {
     user:{
         email:'',
         Name:'',
-        Department:'',
+        Field:'',
         token:'Dummy',
         isAuthenticated:false
     }
