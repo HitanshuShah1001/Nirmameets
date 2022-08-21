@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react';
-import { createMaterialBottomTabNavigator, MaterialBottomTabView } from '@react-navigation/material-bottom-tabs';
+import React from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Login from '../Screens/Auth/Login';
 import Home from '../Screens/AfterAuth/Home';
 import SignUp from '../Screens/Auth/SignUp';
@@ -9,6 +9,7 @@ import { getUser } from '../Redux/Action/Actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Settings from '../Screens/AfterAuth/Settings';
 import User from '../Screens/AfterAuth/User';
+import Addquestion from '../Screens/AfterAuth/Addquestion';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -16,7 +17,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabs = () => {
     return (
-        <Tab.Navigator initialRouteName='HFeedome' shifting={true} keyboardHidesNavigationBar={false} sceneAnimationEnabled>
+        <Tab.Navigator initialRouteName='Feed' shifting={true} keyboardHidesNavigationBar={false} sceneAnimationEnabled>
             <Tab.Screen name="Feed" component={Home} />
             <Tab.Screen name="User" component={User} />
             <Tab.Screen name="Settings" component={Settings} />
@@ -35,6 +36,7 @@ const Navigation = () => {
                 <Stack.Navigator>
                     <Stack.Screen name="Main page" 
                         component={BottomTabs} options={{headerShown:false}} />
+                    <Stack.Screen name="Addquestion" component={Addquestion}  />
                 </Stack.Navigator>
             </NavigationContainer>
         )

@@ -1,0 +1,1 @@
+export const PASSWORD_VALIDATOR = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");

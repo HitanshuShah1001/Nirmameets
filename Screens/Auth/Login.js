@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Text, View,TextInput, SafeAreaView,Button } from 'react-native';
+import { Text, View,TextInput, SafeAreaView,Button, Alert } from 'react-native';
 import axios from 'axios';
 import { setUser } from '../../Redux/Action/Actions';
 import { useDispatch } from 'react-redux';
@@ -17,23 +17,30 @@ export default function Login() {
   }
   const handleLogin = () => {
     console.log(userdetails);
-    axios.post('https://nirmameetsbackend.herokuapp.com/login',{
+    
+    axios.post('http://localhost:443/login',{
       email:email,
-      password:password
+      password:password 
     }).then(res => {
-      
-      if(res.status===200){
+      console.log(res.data);
+      if(res.data.message==='Login Succesful'){
         dispatch(
           setUser(
             res.data.Name,
             res.data.email,
-            res.data.Field,
             res.data.token,
+            res.data.Field,
+            res.data.Username,
             true
           )
         )
       }
-    });
+      else{
+        Alert.alert(res.data)
+      }
+    }).catch(error => {
+      console.log(error);
+    }) ;
   }
   return (
     <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
@@ -42,7 +49,7 @@ export default function Login() {
         </View>
         <View style={{flex:1,alignItems:'center'}}>
         <TextInput style={{height:50,width:'80%',backgroundColor:'white',borderRadius:20,paddingHorizontal:10}} placeholder="Email" value={email} onChangeText={(text) => setEmail(text)} />
-        <TextInput style={{height:50,width:'80%',backgroundColor:'white',borderRadius:20,marginTop:30,paddingHorizontal:10}} placeholder="Password" value={password} onChangeText={(text) => setPassword(text)} />
+        <TextInput style={{height:50,width:'80%',backgroundColor:'white',borderRadius:20,marginTop:30,paddingHorizontal:10}} placeholder="Password" value={password} onChangeText={(text) => setPassword(text)} secureTextEntry/>
         <Button title="Login" onPress={handleLogin}/>
         <Button title="Don't have an account? Sign Up" onPress={() => navigation.navigate('SignUp')} />
         </View>
