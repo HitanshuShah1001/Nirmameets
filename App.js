@@ -6,14 +6,19 @@ import { createStore,applyMiddleware,compose } from "redux";
 import {  Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import NMReducer from './Redux/Reducer/reducer';
-
+import { AppContext } from './Context/Context';
+import { useState } from 'react';
 
 export default function App() {
   const middleware = [thunk];
   const store = createStore(NMReducer,compose(applyMiddleware(...middleware)))
+  const [refreshQuestions,setRefreshquestions] = useState(false);
+  const values = {refreshQuestions,setRefreshquestions}
   return (
     <Provider store={store}>
+      <AppContext.Provider value={values} >
       <Navigation />
+      </AppContext.Provider>
       </Provider>
 
   );

@@ -1,9 +1,13 @@
 import React,{useState} from "react";
 import {View,SafeAreaView,Button,TextInput, Alert} from 'react-native';
 import { useDispatch,useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { AppContext } from "../../Context/Context";
 import axios from "axios";
 
 export default function Addquestion(){
+    const navigation = useNavigation();
+    const { refreshQuestions,setRefreshquestions } = React.useContext(AppContext);
     const [question,setQuestion] = useState("");
 
     const user = useSelector((state) => state.user)
@@ -19,6 +23,8 @@ export default function Addquestion(){
         }).then(res => {
             if(res.data.message == 'Question posted succesfully'){
                 Alert.alert(res.data.message);
+                setRefreshquestions(!refreshQuestions);
+                navigation.navigate('Feed')
             };
         }).catch(error => {
             console.log(error);

@@ -1,10 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useSelector } from "react-redux";
+import { AppContext } from "../Context/Context";
+
 
 export default function Questions() {
+
+
   const user = useSelector((state) => state.user);
+  const { refreshQuestions} = React.useContext(AppContext);
   const [answers,setAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [id,setId] = useState('');
@@ -17,16 +22,16 @@ export default function Questions() {
         token: user.token,
       })
       .then((res) => {
+        console.log(res.data);
         setQuestions(res.data.message);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [refreshQuestions]);
 
   useEffect(() => {
     setAnswers(answers)
-    console.log(answers,'Here');
   },[answers])
 
   const getAnswer = async(id) => {
@@ -56,8 +61,10 @@ export default function Questions() {
                   <Text>Asked by {question.Username}</Text>
               </View>
               <View>
-                  <Button title="See answers" onPress={() => getAnswer(question._id)} />
-              </View>
+                <Pressable onPress={() => getAnswer(question._id)}>
+                  <Text>Get Answer</Text>
+                </Pressable>
+                  </View>
           </View>
           {answers!==[] && question._id==id && (
             answers.map((answer,index) => (

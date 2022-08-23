@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {View,Text,StyleSheet, SafeAreaView,Button} from 'react-native';
 import { useDispatch,useSelector } from "react-redux";
 import { logoutUser } from "../../Redux/Action/Actions";
 import { useNavigation } from "@react-navigation/native";
 import Questions from "../../Components/Questions";
+
+
 export default function Home(){
-    const user = useSelector((state) => state.user)
+
+    const user = useSelector((state) => state.user);
     const navigation = useNavigation();
     const dispatch = useDispatch();
     return (
@@ -17,7 +20,7 @@ export default function Home(){
                 </View>
                  
                  <Button title="Logout "  onPress={() => dispatch(logoutUser())}/> 
-                 <Questions />
+                 <Questions Rerenderquestions={() => Rerenderquestions} />
             </View>
         </SafeAreaView>
     )
