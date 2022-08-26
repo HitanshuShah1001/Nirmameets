@@ -4,6 +4,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { AppContext } from "../../Context/Context";
 import axios from "axios";
+import { logoutUser } from "../../Redux/Action/Actions";
 
 export default function Addquestion(){
     const navigation = useNavigation();
@@ -27,7 +28,9 @@ export default function Addquestion(){
                 navigation.navigate('Feed')
             };
         }).catch(error => {
-            console.log(error);
+            if(error.response.status===401){
+                dispatch(logoutUser())
+              }
         })
     }
     return (
