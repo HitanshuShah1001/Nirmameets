@@ -11,18 +11,20 @@ const initialState = {
     Field:'',
     token:'',
     Username:'',
+    Profilephoto:'',
     isAuthenticated:false
   },
 };
 
 export const setUser =
-  (Name, email, token, Field,Username,auth) => async (dispatch) => {
+  (Name, email, token, Field,Username,Profilephoto,auth) => async (dispatch) => {
     let user = {
       Name: Name,
       email: email,
       token: token,
       Field: Field,
       Username:Username,
+      Profilephoto:Profilephoto,
       isAuthenticated:auth
     };
 

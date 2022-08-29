@@ -31,6 +31,7 @@ export default function Login() {
             res.data.token,
             res.data.Field,
             res.data.Username,
+            res.data.Profilephoto,
             true
           )
         )

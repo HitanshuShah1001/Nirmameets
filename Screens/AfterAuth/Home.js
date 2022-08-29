@@ -11,6 +11,10 @@ export default function Home(){
     const user = useSelector((state) => state.user);
     const navigation = useNavigation();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(user);
+    },[])
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={{flex:1}}>

@@ -13,11 +13,11 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { PASSWORD_VALIDATOR } from "../../Validators/Password";
 import { EAMIL_VALIDATOR } from "../../Validators/Email";
+
 import mime from "mime";
 
 export default function SignUp(props) {
   
-  console.log(props);
   const navigation = useNavigation();
   const [name, setName] = useState("Dummy");
   const [Username, setUsername] = useState("Dummy2");
@@ -176,19 +176,9 @@ export default function SignUp(props) {
           onChangeText={(text) => setConfirmpassword(text)}
           secureTextEntry
         />
-        <TextInput
-          style={{
-            height: 50,
-            width: "80%",
-            backgroundColor: "white",
-            borderRadius: 20,
-            marginTop: 30,
-            paddingHorizontal: 10,
-          }}
-          placeholder="Field"
-          value={Field}
-          onChangeText={(text) => setField(text)}
-        />
+        <Pressable onPress={() => navigation.navigate('Fields')}>
+        <Text style={{backgroundColor:'white'}}>Field</Text>
+        </Pressable>
         <Button title="SignUp" onPress={handleSignUp} />
         <Button
           title="Already have an account? Log In"
