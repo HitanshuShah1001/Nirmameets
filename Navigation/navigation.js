@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Settings from '../Screens/AfterAuth/Settings';
 import User from '../Screens/AfterAuth/User';
 import Addquestion from '../Screens/AfterAuth/Addquestion';
+import CameraScreen from '../Screens/Auth/CameraScreen';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -47,6 +48,7 @@ const Navigation = () => {
                 <Stack.Navigator>
                     <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
                     <Stack.Screen name="SignUp" component={SignUp}  options={{headerShown:false}}/>
+                    <Stack.Screen name="CameraScreen" component={CameraScreen} options={{headerShown:false}} />
                 </Stack.Navigator>
             </NavigationContainer>
         )

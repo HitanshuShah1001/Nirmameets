@@ -14,6 +14,7 @@ export default function Questions() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
+    console.log('Hereee',user.Field,user.token)
     axios
       .post("http://localhost:443/getquestion", {
         Field: user.Field,
@@ -23,9 +24,9 @@ export default function Questions() {
         setQuestions(res.data.message);
       })
       .catch((error) => {
-        Alert.alert(error.response);
+        
         if (error.response.status === 401) {
-          dispatch(logoutUser());
+          dispatch(() => logoutUser());
         }
       });
   }, [refreshQuestions]);

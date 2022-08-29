@@ -21,7 +21,7 @@ const RenderQuestions = ({ question, answers }) => {
       Username:user.Username
     }).then(res => {
       Alert.alert(res.data.message);
-      setRefreshquestions(!refreshQuestions)
+      setRefreshquestions(refreshQuestions => !refreshQuestions)
     }).catch(error => {
       if(error?.response?.status===401){
           dispatch(logoutUser())
@@ -31,6 +31,24 @@ const RenderQuestions = ({ question, answers }) => {
         Alert.alert(error.message);
       }
   })
+  }
+
+  const addupvotes = (id) => {
+    axios.post(`http://localhost:443/addupvote/${question._id}`,{
+      token:user.token,
+      id:id
+    }).then(res => {
+      console.log(res.data);
+      setRefreshquestions(refreshQuestions => !refreshQuestions);
+    }).catch(error => {
+      console.log(error);
+      if(error?.response?.status === 401){
+        dispatch(logoutUser())
+      }
+      else{
+        console.log(error.response);
+      }
+    })
   }
 
   
@@ -113,6 +131,10 @@ const RenderQuestions = ({ question, answers }) => {
               >
                 <Text>{Object.getOwnPropertyNames(answer)[0]}</Text>
                 <Text>{Object.values(answer)[0]}</Text>
+                <Pressable onPress={() => {addupvotes(answer.id)}}>
+                  <Text>Upvote</Text>
+                  <Text>{answer?.Votes}</Text>
+                  </Pressable>
               </View>
             ))}
           

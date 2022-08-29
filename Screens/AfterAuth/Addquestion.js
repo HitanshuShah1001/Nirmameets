@@ -34,7 +34,7 @@ export default function Addquestion(){
         })
     }
     return (
-        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+        <SafeAreaView style={{flex:1}}>
             <View style={{flex:1}}>
                <TextInput placeholder="Question" value={question} onChangeText={(text) => setQuestion(text)} style={{borderRadius:20,height:50,paddingHorizontal:10,backgroundColor:'white',marginTop:30}} />
                <Button title="Add question" onPress={addquestion} />

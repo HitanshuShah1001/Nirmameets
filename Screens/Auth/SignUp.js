@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -6,20 +6,27 @@ import {
   SafeAreaView,
   Button,
   Alert,
+  Pressable,
+  Image
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { PASSWORD_VALIDATOR } from "../../Validators/Password";
 import { EAMIL_VALIDATOR } from "../../Validators/Email";
+import mime from "mime";
 
-export default function SignUp() {
+export default function SignUp(props) {
+  
+  console.log(props);
   const navigation = useNavigation();
   const [name, setName] = useState("Dummy");
   const [Username, setUsername] = useState("Dummy2");
   const [email, setEmail] = useState("Dummy2@gmail.com");
   const [password, setPassword] = useState("12345678");
   const [confirmpassword, setConfirmpassword] = useState("");
+  const [profilephoto,setProfilephoto] = useState("");
   const [Field, setField] = useState("");
+
   const fieldValidation =
     name !== "" &&
     Username !== "" &&
@@ -39,14 +46,31 @@ export default function SignUp() {
         "Passwords should be atleast 8 characters long with a combination of lowercase,uppercase letters and a Number"
       );
     } else {
+      const newImage = "file:///" + profilephoto.split("file:/").join("");
+      console.log(newImage);
+      let formData = new FormData();
+      formData.append("Profilephoto",{
+        uri:profilephoto,
+        type:mime.getType(profilephoto),
+        name:profilephoto.split("/").pop()
+
+      });
+      formData.append("Name",name);
+      formData.append("Username",Username);
+      formData.append("email",email);
+      formData.append("password",password);
+      formData.append("Field",Field);
+
+      const config = {
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      }
+
       axios
-        .post("http://localhost:443/register", {
-          Name: name,
-          Username: Username,
-          email: email,
-          password: password,
-          Field: Field,
-        })
+        .post("http://localhost:443/register",
+          formData,config
+        )
         .then((res) => {
           if (res.data.message !== "User created succesfully") {
             Alert.alert(res.data.message);
@@ -60,6 +84,13 @@ export default function SignUp() {
         });
     }
   };
+
+  useEffect(() => {
+    if(props.route?.params?.params?.photo?.uri !== null &&  props.route?.params?.params?.photo?.uri !== undefined){
+      setProfilephoto(props.route.params.params.photo.uri);
+    }
+  },[props.route?.params?.params?.photo?.uri])
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <View
@@ -70,6 +101,15 @@ export default function SignUp() {
         </Text>
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
+        <Pressable onPress={() => navigation.navigate('CameraScreen')}>
+          {profilephoto!=="" && (
+            <Image source={{uri:profilephoto}} style={{height:80,width:80,borderRadius:20}} />
+          )}
+          {profilephoto==="" && (
+            <View style={{height:80,width:80,borderRadius:20,backgroundColor:'grey'}} />
+          )}
+
+        </Pressable>
         <TextInput
           style={{
             height: 50,
