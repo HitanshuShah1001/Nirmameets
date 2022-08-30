@@ -27,6 +27,11 @@ export default function SignUp(props) {
   const [profilephoto,setProfilephoto] = useState("");
   const [Field, setField] = useState("");
 
+  useEffect(() => {
+
+    setField(props.route?.params?.params?.field)
+  },[props.route?.params?.params?.field])
+
   const fieldValidation =
     name !== "" &&
     Username !== "" &&
@@ -176,8 +181,9 @@ export default function SignUp(props) {
           onChangeText={(text) => setConfirmpassword(text)}
           secureTextEntry
         />
-        <Pressable onPress={() => navigation.navigate('Fields')}>
-        <Text style={{backgroundColor:'white'}}>Field</Text>
+        <Pressable onPress={() => navigation.navigate('Fields')} >
+        <Text style={{backgroundColor:'white'}}>Field :- {Field}</Text>
+        
         </Pressable>
         <Button title="SignUp" onPress={handleSignUp} />
         <Button
