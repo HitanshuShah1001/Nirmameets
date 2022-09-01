@@ -13,7 +13,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { PASSWORD_VALIDATOR } from "../../Validators/Password";
 import { EAMIL_VALIDATOR } from "../../Validators/Email";
-
+import { TEXTCOLOR,PAGECOLOR,BUTTONCOLOR,TNHEIGHT,TNCOLOR,HEADERWIEGHT,SUBHEADERWEIGHT } from "../../Utilities/auth";
 import mime from "mime";
 
 export default function SignUp(props) {
@@ -102,7 +102,7 @@ export default function SignUp(props) {
         style={{ flex: 0.3, alignItems: "center", justifyContent: "center" }}
       >
         <Text style={{ fontSize: 40, color: "white", fontWeight: "700" }}>
-          NirmaMeets
+          SignUp
         </Text>
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
@@ -115,11 +115,14 @@ export default function SignUp(props) {
           )}
 
         </Pressable>
+        <View style={{alignItems:'flex-start',width:'80%'}}>
+        <Text style={{color:'white',paddingHorizontal:10}}>Name</Text>
+       
         <TextInput
           style={{
-            height: 50,
-            width: "80%",
-            backgroundColor: "white",
+            height: TNHEIGHT,
+            width: "100%",
+            backgroundColor: TNCOLOR,
             borderRadius: 20,
             paddingHorizontal: 10,
           }}
@@ -127,26 +130,28 @@ export default function SignUp(props) {
           value={name}
           onChangeText={(text) => setName(text)}
         />
+        <Text style={{color:'white',paddingHorizontal:10,marginTop: 30}}>Username</Text>
         <TextInput
           style={{
             height: 50,
-            width: "80%",
+            width: "100%",
             backgroundColor: "white",
             borderRadius: 20,
-            paddingHorizontal: 10,
-            marginTop: 30,
+            paddingHorizontal: 10
+            
           }}
           placeholder="Username"
           value={Username}
           onChangeText={(text) => setUsername(text)}
         />
+        <Text style={{color:'white',marginTop: 30,paddingHorizontal:10}}>Email</Text>
         <TextInput
           style={{
             height: 50,
-            width: "80%",
-            backgroundColor: "white",
+            width: "100%",
+            backgroundColor:TNCOLOR ,
             borderRadius: 20,
-            marginTop: 30,
+            
             paddingHorizontal: 10,
           }}
           placeholder="Email"
@@ -156,11 +161,12 @@ export default function SignUp(props) {
         <TextInput
           style={{
             height: 50,
-            width: "80%",
+            width: "100%",
             backgroundColor: "white",
             borderRadius: 20,
             marginTop: 30,
             paddingHorizontal: 10,
+            
           }}
           placeholder="Password"
           value={password}
@@ -170,7 +176,7 @@ export default function SignUp(props) {
         <TextInput
           style={{
             height: 50,
-            width: "80%",
+            width: "100%",
             backgroundColor: "white",
             borderRadius: 20,
             marginTop: 30,
@@ -181,6 +187,7 @@ export default function SignUp(props) {
           onChangeText={(text) => setConfirmpassword(text)}
           secureTextEntry
         />
+         </View>
         <Pressable onPress={() => navigation.navigate('Fields')} >
         <Text style={{backgroundColor:'white'}}>Field :- {Field}</Text>
         
