@@ -16,13 +16,12 @@ export default function Login() {
     password:password
   }
   const handleLogin = () => {
-    console.log(userdetails);
-    
+    console.log('In login')
     axios.post('http://localhost:443/login',{
       email:email,
       password:password 
     }).then(res => {
-      console.log(res.data);
+      console.log(res.data,'data');
       if(res.data.message==='Login Succesful'){
         dispatch(
           setUser(
@@ -38,10 +37,11 @@ export default function Login() {
         
       }
       else{
+        console.log(res.data,'res');
         Alert.alert(res.data)
       }
     }).catch(error => {
-      console.log(error);
+      Alert.alert(error.response.data.message);
     }) ;
   }
   return (
