@@ -24,12 +24,11 @@ export default function Addquestion(){
         }).then(res => {
             if(res.data.message == 'Question posted succesfully'){
                 Alert.alert(res.data.message);
-                setRefreshquestions(!refreshQuestions);
-                navigation.navigate('Feed')
+                navigation.navigate('Feed',{params:{refreshquestions:true}})
             };
         }).catch(error => {
             if(error.response.status===401){
-                dispatch(logoutUser())
+                dispatch(() => logoutUser())
               }
         })
     }

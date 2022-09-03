@@ -4,8 +4,10 @@ import { View, Text, Pressable, Button, Modal, TextInput, Alert, ScrollView } fr
 import { useSelector, useDispatch } from "react-redux";
 import { AppContext } from "../Context/Context";
 import { logoutUser } from "../Redux/Action/Actions";
+import { useNavigation } from "@react-navigation/native";
 
-const RenderQuestions = ({ question, answers }) => {
+const RenderQuestions = ({ question, answers,toRefresh }) => {
+  const navigation = useNavigation();
   const { setRefreshquestions,refreshQuestions } = React.useContext(AppContext);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user)
@@ -15,16 +17,18 @@ const RenderQuestions = ({ question, answers }) => {
   const [tnheight,setTnheight] = useState(0);
 
   const postanswer = () => {
+    toRefresh(false);
     axios.post(`http://localhost:443/addanswer/${question._id}`,{
       token:user.token,
       answer:answer,
       Username:user.Username
     }).then(res => {
+      toRefresh(Date.now());
       Alert.alert(res.data.message);
-      setRefreshquestions(refreshQuestions => !refreshQuestions)
+      
     }).catch(error => {
       if(error?.response?.status===401){
-          dispatch(logoutUser())
+          dispatch(() => logoutUser())
         }
       else{
         console.log(error.response);
@@ -33,17 +37,34 @@ const RenderQuestions = ({ question, answers }) => {
   })
   }
 
-  const addupvotes = (id) => {
+  const addupvote = (id) => {
+    
     axios.post(`http://localhost:443/addupvote/${question._id}`,{
       token:user.token,
       id:id
     }).then(res => {
-      console.log(res.data);
-      setRefreshquestions(refreshQuestions => !refreshQuestions);
+      toRefresh(Date.now());
     }).catch(error => {
       console.log(error);
       if(error?.response?.status === 401){
-        dispatch(logoutUser())
+        dispatch(() => logoutUser())
+      }
+      else{
+        console.log(error.response);
+      }
+    })
+  }
+
+  const adddownvote = (id) => {
+    toRefresh(false);
+    axios.post(`http://localhost:443/adddownvote/${question._id}`,{
+      token:user.token,
+      id:id
+    }).then(res => {
+      toRefresh(Date.now());
+    }).catch(error => {
+      if(error?.response?.status === 401){
+        dispatch(() => logoutUser());
       }
       else{
         console.log(error.response);
@@ -131,10 +152,16 @@ const RenderQuestions = ({ question, answers }) => {
               >
                 <Text>{Object.getOwnPropertyNames(answer)[0]}</Text>
                 <Text>{Object.values(answer)[0]}</Text>
-                <Pressable onPress={() => {addupvotes(answer.id)}}>
+                <Pressable onPress={() => {addupvote(answer.id)}}>
                   <Text>Upvote</Text>
-                  <Text>{answer?.Votes}</Text>
                   </Pressable>
+                  <Text>{answer?.Votes}</Text>
+                  <Pressable onPress={() => {adddownvote(answer.id)}}>
+                  <Text>Downvote</Text>
+                  </Pressable>
+
+                  
+
               </View>
             ))}
           

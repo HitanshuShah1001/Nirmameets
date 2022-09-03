@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {View,Text,StyleSheet, SafeAreaView,Button} from 'react-native';
+import React, { useEffect, useState } from "react";
+import {View,Text,SafeAreaView,Button} from 'react-native';
 import { useDispatch,useSelector } from "react-redux";
 import { logoutUser } from "../../Redux/Action/Actions";
 import { useNavigation } from "@react-navigation/native";
@@ -7,14 +7,15 @@ import Questions from "../../Components/Questions";
 
 
 export default function Home(){
-
+ 
     const user = useSelector((state) => state.user);
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(user);
-    },[])
+
+    
+
+
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={{flex:1}}>
@@ -23,8 +24,9 @@ export default function Home(){
                     <Button title="Ask "  onPress={() => navigation.navigate('Addquestion')}/> 
                 </View>
                  
-                 <Button title="Logout "  onPress={() => dispatch(logoutUser())}/> 
-                 <Questions Rerenderquestions={() => Rerenderquestions} />
+                 <Button title="Logout "  onPress={() => dispatch(() => logoutUser())}/> 
+                 <Questions  />
+                 {/* <Addquestion /> */}
             </View>
         </SafeAreaView>
     )

@@ -1,44 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Alert, ScrollView, Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { AppContext } from "../Context/Context";
+import { ScrollView, Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import RenderQuestions from "./Renderquestions";
 import { logoutUser } from "../Redux/Action/Actions";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function Questions() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const { refreshQuestions } = React.useContext(AppContext);
-  const [answers, setAnswers] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  const [questions,setQuestions] = useState([]);
+  const [refresh,setRefresh] = useState(10);
+  const [showIndicator,setShowindicator] = useState(false);
+
+  const toRefresh = (refresh) => {
+    console.log('I am called!');
+    setRefresh(refresh);
+}
 
   useEffect(() => {
-    console.log('Hereee',user.Field,user.token)
-    axios
-      .post("http://localhost:443/getquestion", {
+    setShowindicator(true);
+    console.log('I am being called!');
+    axios.post("http://localhost:443/getquestion", {
         Field: user.Field,
         token: user.token,
       })
       .then((res) => {
+        setShowindicator(false);
         setQuestions(res.data.message);
       })
       .catch((error) => {
-        
+        setShowindicator(false);
         if (error.response.status === 401) {
           dispatch(() => logoutUser());
         }
       });
-  }, [refreshQuestions]);
+  }, [refresh]);
 
 
 
   const Questions = questions.map((question) => 
-  <RenderQuestions question={question} key={question._id} answers={question.Answers}/>
+  <RenderQuestions question={question} key={question._id} answers={question.Answers} toRefresh={toRefresh}/>
   )
 
   return (
+
     <ScrollView showsVerticalScrollIndicator>
+      {showIndicator && (
+        <ActivityIndicator size={"small"} />
+      )}
+      {/* {!showIndicator && (
+        questions.map((question) => <RenderQuestions question={question} key={question._id} answers={question.Answers} toRefresh={toRefresh}/>)
+      )} */}
       <Text style={{ fontSize: 40, marginHorizontal: 20 }}>Questions</Text>
       {Questions}
     </ScrollView>
