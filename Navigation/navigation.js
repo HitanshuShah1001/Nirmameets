@@ -12,6 +12,8 @@ import User from '../Screens/AfterAuth/User';
 import Addquestion from '../Screens/AfterAuth/Addquestion';
 import CameraScreen from '../Screens/Auth/CameraScreen';
 import Fields from '../Screens/AfterAuth/Fields';
+import Forgotpassword from '../Screens/Auth/Forgotpassword';
+import CheckEmail from '../Screens/Auth/CheckEmail';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -50,7 +52,9 @@ const Navigation = () => {
                     <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
                     <Stack.Screen name="SignUp" component={SignUp}  options={{headerShown:false}}/>
                     <Stack.Screen name="CameraScreen" component={CameraScreen} options={{headerShown:false}} />
+                    <Stack.Screen name="CheckEmail" component={CheckEmail} options={{headerShown:false}} />
                     <Stack.Screen name="Fields" component={Fields}  />
+
                 </Stack.Navigator>
             </NavigationContainer>
         )

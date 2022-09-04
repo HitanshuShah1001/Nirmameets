@@ -102,7 +102,12 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
     <View key={question._id} style={{ marginTop: 30, alignItems: "center" }}>
       <Modal visible={addcommentmodalvisible} animationType="slide">
         <View style={{ flex: 1, marginTop: 30 }}>
+          <Pressable onPress={() => setAddcommentmodalvisible(false)}>
+            <Text>Go Back</Text>
+          </Pressable>
+          <ScrollView >
           {answers?.map((answer, index) => (
+            
             <View
               key={index}
               style={{
@@ -115,12 +120,14 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
               <Text>{Object.getOwnPropertyNames(answer)[0]}</Text>
               <Text>{Object.values(answer)[0]}</Text>
             </View>
+            
           ))}
-          <View style={{ position: "absolute", bottom: 40, width: "100%" }}>
+          </ScrollView>
+          </View>
+          <View style={{ flex:0.2, width: "100%",backgroundColor:'black',justifyContent:'space-around' }}>
             <TextInput
               style={{
-                position: "absolute",
-                bottom: 40,
+               
                 height: Math.max(50, tnheight),
                 borderRadius: 10,
                 width: "90%",
@@ -140,11 +147,11 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
             />
             <Button
               title="Post"
-              style={{ position: "absolute", bottom: 10 }}
+              
               onPress={() => postanswer()}
             />
           </View>
-        </View>
+        
       </Modal>
       <Text>{question.question}</Text>
       <Text>{question.Username}</Text>

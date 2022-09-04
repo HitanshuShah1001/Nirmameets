@@ -73,6 +73,7 @@ export default function Login() {
               onBlur={handlePasswordblur} secureTextEntry/>
         <Button title="Login" onPress={handleLogin}/>
         <Button title="Don't have an account? Sign Up" onPress={() => navigation.navigate('SignUp')} />
+        <Button title="Forgot password?" onPress={() => navigation.navigate('CheckEmail')} />
         </View>
     </SafeAreaView>
   );
