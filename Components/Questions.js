@@ -30,9 +30,10 @@ export default function Questions() {
         setQuestions(res.data.message);
       })
       .catch((error) => {
+        console.log(error.response.status);
         setShowindicator(false);
         if (error.response.status === 401) {
-          dispatch(() => logoutUser());
+          dispatch(logoutUser());
         }
       });
   }, [refresh]);

@@ -40,7 +40,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
-          dispatch(() => logoutUser());
+          dispatch(logoutUser());
         } else {
           console.log(error.response);
           Alert.alert(error.message);
@@ -64,7 +64,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
         .catch((error) => {
           console.log(error);
           if (error?.response?.status === 401) {
-            dispatch(() => logoutUser());
+            dispatch(logoutUser());
           } else {
             console.log(error.response);
           }
@@ -86,7 +86,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
         })
         .catch((error) => {
           if (error?.response?.status === 401) {
-            dispatch(() => logoutUser());
+            dispatch(logoutUser());
           } else {
             console.log(error.response);
           }

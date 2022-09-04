@@ -4,17 +4,34 @@ import axios from 'axios';
 import { setUser } from '../../Redux/Action/Actions';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { TNCOLOR,BORDERCOLOR,BLURBORDERCOLOR } from "../../Utilities/auth";
+import { styles } from "../../Styles/Auth/Signup";
 
 export default function Login() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
+  const [emailbordercolor,setEmailbordercolor] = useState("");
+  const [passwordbordercolor,setPasswordbordercolor] = useState("");
 
-  const userdetails = {
-    email:email,
-    password:password
+  const handleEmailfocus = () => {
+    setEmailbordercolor(BORDERCOLOR)
+  };
+
+  const handleEmailblur= () => {
+    setEmailbordercolor(BLURBORDERCOLOR);
   }
+
+  const handlePasswordfocus = () => {
+    setPasswordbordercolor(BORDERCOLOR)
+  };
+
+  const handlePasswordblur = () => {
+    setPasswordbordercolor(BLURBORDERCOLOR);
+  }
+
+
   const handleLogin = () => {
     console.log('In login')
     axios.post('http://localhost:443/login',{
@@ -49,9 +66,11 @@ export default function Login() {
         <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
             <Text style={{fontSize:40,color:'white',fontWeight:'700'}}>NirmaMeets</Text>
         </View>
-        <View style={{flex:1,alignItems:'center'}}>
-        <TextInput style={{height:50,width:'80%',backgroundColor:'white',borderRadius:20,paddingHorizontal:10}} placeholder="Email" value={email} onChangeText={(text) => setEmail(text)} />
-        <TextInput style={{height:50,width:'80%',backgroundColor:'white',borderRadius:20,marginTop:30,paddingHorizontal:10}} placeholder="Password" value={password} onChangeText={(text) => setPassword(text)} secureTextEntry/>
+        <View style={{flex:1,alignItems:'center',justifyContent:'flex-start'}}>
+        <TextInput style={[styles.textinput,{width:'80%',borderColor:emailbordercolor}]} placeholder="Email" value={email} onChangeText={(text) => setEmail(text)} onFocus={handleEmailfocus}
+              onBlur={handleEmailblur}/>
+        <TextInput style={[styles.textinput,{width:'80%',marginTop:30,borderColor:passwordbordercolor}]} placeholder="Password" value={password} onChangeText={(text) => setPassword(text)} onFocus={handlePasswordfocus}
+              onBlur={handlePasswordblur} secureTextEntry/>
         <Button title="Login" onPress={handleLogin}/>
         <Button title="Don't have an account? Sign Up" onPress={() => navigation.navigate('SignUp')} />
         </View>

@@ -28,7 +28,7 @@ export default function Addquestion(){
             };
         }).catch(error => {
             if(error.response.status===401){
-                dispatch(() => logoutUser())
+                dispatch(logoutUser())
               }
         })
     }

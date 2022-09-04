@@ -24,7 +24,7 @@ export default function Home(){
                     <Button title="Ask "  onPress={() => navigation.navigate('Addquestion')}/> 
                 </View>
                  
-                 <Button title="Logout "  onPress={() => dispatch(() => logoutUser())}/> 
+                 <Button title="Logout "  onPress={() => dispatch(logoutUser())}/> 
                  <Questions  />
                  {/* <Addquestion /> */}
             </View>
