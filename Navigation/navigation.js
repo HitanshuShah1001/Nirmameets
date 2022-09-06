@@ -14,6 +14,7 @@ import CameraScreen from '../Screens/Auth/CameraScreen';
 import Fields from '../Screens/AfterAuth/Fields';
 import Forgotpassword from '../Screens/Auth/Forgotpassword';
 import CheckEmail from '../Screens/Auth/CheckEmail';
+import OTP from '../Screens/Auth/OTP';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -52,9 +53,10 @@ const Navigation = () => {
                     <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
                     <Stack.Screen name="SignUp" component={SignUp}  options={{headerShown:false}}/>
                     <Stack.Screen name="CameraScreen" component={CameraScreen} options={{headerShown:false}} />
-                    <Stack.Screen name="CheckEmail" component={CheckEmail} options={{headerShown:false}} />
                     <Stack.Screen name="Fields" component={Fields}  />
-
+                    <Stack.Screen name="CheckEmail" component={CheckEmail}  />
+                    <Stack.Screen name="OTP" component={OTP} />
+                    <Stack.Screen name="Forgotpassword" component={Forgotpassword} />
                 </Stack.Navigator>
             </NavigationContainer>
         )
