@@ -13,7 +13,8 @@ export default function CheckEmail() {
         Alert.alert(res.data.message);
         navigation.navigate("OTP",{params:{email}})
     }).catch(error => {
-        Alert.alert(error.response.message);
+        
+        Alert.alert(error.response.data);
     })
     }
     
