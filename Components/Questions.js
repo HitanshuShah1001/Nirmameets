@@ -27,6 +27,7 @@ export default function Questions() {
       })
       .then((res) => {
         setShowindicator(false);
+        console.log('Response>>>',res.data.message);
         setQuestions(res.data.message);
       })
       .catch((error) => {

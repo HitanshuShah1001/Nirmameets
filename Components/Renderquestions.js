@@ -49,10 +49,10 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   };
 
   const addupvote = (id, Username) => {
-    console.log(user.Username, question.Username);
     if (user.Username === Username) {
       Alert.alert("You cannot upvote your own answer");
     } else {
+      
       axios
         .post(`http://localhost:443/addupvote/${question._id}`, {
           token: user.token,
