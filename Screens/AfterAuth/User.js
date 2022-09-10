@@ -14,7 +14,10 @@ export default function User(){
         console.log(user);
     },[])
 
+
+
     useEffect(() => {
+        console.log('Hereeee');
         axios.post('http://localhost:443/gettotalquestionsasked',{
             token:user.token,
             Username:user.Username
@@ -26,6 +29,7 @@ export default function User(){
     },[refreshQuestions])
 
     useEffect(() => {
+        console.log('Answersss');
         axios.post('http://localhost:443/gettotalanswers',{
             token:user.token,
             Username:user.Username

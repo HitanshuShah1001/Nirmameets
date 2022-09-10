@@ -27,6 +27,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   const [tnheight, setTnheight] = useState(0);
 
   const postanswer = () => {
+    console.log('Here in post')
     toRefresh(false);
     axios
       .post(`http://localhost:443/addanswer/${question._id}`, {
@@ -37,6 +38,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
       .then((res) => {
         toRefresh(Date.now());
         Alert.alert(res.data.message);
+        setAddcommentmodalvisible(false)
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
@@ -49,6 +51,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   };
 
   const addupvote = (id, Username) => {
+    console.log('Here in up');
     if (user.Username === Username) {
       Alert.alert("You cannot upvote your own answer");
     } else {
@@ -73,6 +76,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   };
 
   const adddownvote = (id, Username) => {
+    console.log('Here in down')
     if (user.Username === Username) {
       Alert.alert("You cannot downvote your own answer");
     } else {
@@ -93,6 +97,20 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
         });
     }
   };
+
+  const deleteanswer = (qid,answerid) => {
+    axios.post(`http://localhost:443/deleteanswer/${qid}`,{
+      id:answerid,
+      token:user.token
+    }).then(res => {
+      console.log(res);
+      Alert.alert(res.data.message);
+      toRefresh(Date.now());
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
 
   const getAnswers = () => {
     setShowanswers(!showanswers);
@@ -191,6 +209,13 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
               >
                 <Text>Downvote</Text>
               </Pressable>
+              {
+                (Object.values(answer)[0] === user.Username || question.Username === user.Username) && (
+                  <Pressable onPress={() => deleteanswer(question._id,answer.id)}>
+                    <Text>Delete</Text>
+                  </Pressable>
+                )
+               }
             </View>
           ))}
         </ScrollView>
