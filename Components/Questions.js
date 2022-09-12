@@ -26,12 +26,11 @@ export default function Questions() {
         token: user.token,
       })
       .then((res) => {
-        setShowindicator(false);
-        console.log('Response>>>',res.data.message);
-        setQuestions(res.data.message);
+        setShowindicator(false)
+        setQuestions(res.data.message)
       })
       .catch((error) => {
-        console.log(error.response.status);
+        console.log(error);
         setShowindicator(false);
         if (error.response.status === 401) {
           dispatch(logoutUser());

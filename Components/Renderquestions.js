@@ -103,7 +103,17 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
       id:answerid,
       token:user.token
     }).then(res => {
-      console.log(res);
+      Alert.alert(res.data.message);
+      toRefresh(Date.now());
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
+  const deletequestion = (qid) => {
+    axios.post(`http://localhost:443/deletequestion/${qid}`,{
+      token:user.token
+    }).then(res => {
       Alert.alert(res.data.message);
       toRefresh(Date.now());
     }).catch(error => {
@@ -119,7 +129,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   return (
     <View key={question._id} style={{ marginTop: 30, alignItems: "center" }}>
       <Modal visible={addcommentmodalvisible} animationType="slide">
-        <View style={{ flex: 1, marginTop: 30 }}>
+        <View style={{ flex: 1, marginTop: 50 }}>
           <Pressable onPress={() => setAddcommentmodalvisible(false)}>
             <Text>Go Back</Text>
           </Pressable>
@@ -173,6 +183,13 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
       </Modal>
       <Text>{question.question}</Text>
       <Text>{question.Username}</Text>
+     {
+     (user.Username === question.Username) && (
+      <Pressable onPress={() => deletequestion(question._id)}>
+        <Text>Delete Question</Text>
+      </Pressable>
+     )} 
+      <Text>Answers received :- {answers.length}</Text>
       <View style={{ flexDirection: "row" }}>
         <Button title="Get answer" onPress={() => getAnswers()} />
         <Button
