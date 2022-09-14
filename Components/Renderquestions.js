@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppContext } from "../Context/Context";
 import { logoutUser } from "../Redux/Action/Actions";
 import { useNavigation } from "@react-navigation/native";
+import Answer from "./Answers";
 
 const RenderQuestions = ({ question, answers, toRefresh }) => {
   const navigation = useNavigation();
@@ -49,67 +50,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
         }
       });
   };
-
-  const addupvote = (id, Username) => {
-    console.log('Here in up');
-    if (user.Username === Username) {
-      Alert.alert("You cannot upvote your own answer");
-    } else {
-      
-      axios
-        .post(`http://localhost:443/addupvote/${question._id}`, {
-          token: user.token,
-          id: id,
-        })
-        .then((res) => {
-          toRefresh(Date.now());
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error?.response?.status === 401) {
-            dispatch(logoutUser());
-          } else {
-            console.log(error.response);
-          }
-        });
-    }
-  };
-
-  const adddownvote = (id, Username) => {
-    console.log('Here in down')
-    if (user.Username === Username) {
-      Alert.alert("You cannot downvote your own answer");
-    } else {
-      axios
-        .post(`http://localhost:443/adddownvote/${question._id}`, {
-          token: user.token,
-          id: id,
-        })
-        .then((res) => {
-          toRefresh(Date.now());
-        })
-        .catch((error) => {
-          if (error?.response?.status === 401) {
-            dispatch(logoutUser());
-          } else {
-            console.log(error.response);
-          }
-        });
-    }
-  };
-
-  const deleteanswer = (qid,answerid) => {
-    axios.post(`http://localhost:443/deleteanswer/${qid}`,{
-      id:answerid,
-      token:user.token
-    }).then(res => {
-      Alert.alert(res.data.message);
-      toRefresh(Date.now());
-    }).catch(error => {
-      console.log(error);
-    })
-  }
-
+  
   const deletequestion = (qid) => {
     axios.post(`http://localhost:443/deletequestion/${qid}`,{
       token:user.token
@@ -125,6 +66,9 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
   const getAnswers = () => {
     setShowanswers(!showanswers);
   };
+
+  const Answers = answers?.map((answer,index) => 
+    <Answer answer={answer} key={index} question={question} toRefresh={toRefresh}/>)
 
   return (
     <View key={question._id} style={{ marginTop: 30, alignItems: "center" }}>
@@ -199,42 +143,7 @@ const RenderQuestions = ({ question, answers, toRefresh }) => {
       </View>
       {showanswers && (
         <ScrollView>
-          {answers?.map((answer, index) => (
-            <View
-              key={index}
-              style={{
-                marginTop: 30,
-                justifyContent: "center",
-                alignItems: "flex-start",
-                paddingHorizontal: 20,
-              }}
-            >
-              <Text>{Object.getOwnPropertyNames(answer)[0]}</Text>
-              <Text>{Object.values(answer)[0]}</Text>
-              <Pressable
-                onPress={() => {
-                  addupvote(answer.id, Object.values(answer)[0]);
-                }}
-              >
-                <Text>Upvote</Text>
-              </Pressable>
-              <Text>{answer?.Votes}</Text>
-              <Pressable
-                onPress={() => {
-                  adddownvote(answer.id, Object.values(answer)[0]);
-                }}
-              >
-                <Text>Downvote</Text>
-              </Pressable>
-              {
-                (Object.values(answer)[0] === user.Username || question.Username === user.Username) && (
-                  <Pressable onPress={() => deleteanswer(question._id,answer.id)}>
-                    <Text>Delete</Text>
-                  </Pressable>
-                )
-               }
-            </View>
-          ))}
+          {Answers}
         </ScrollView>
       )}
     </View>

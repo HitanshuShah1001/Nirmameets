@@ -19,7 +19,7 @@ export default function Questions() {
 }
 
   useEffect(() => {
-    setShowindicator(true);
+    // setShowindicator(true);
     console.log('I am being called!');
     axios.post("http://localhost:443/getquestion", {
         Field: user.Field,
